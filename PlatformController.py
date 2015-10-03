@@ -11,8 +11,6 @@ class PlatformController:
 		self.last_x = MAX_JUMP
 		for i in range(0, self.index):
 			self.platform_set.append(self.generate_platform(i))
-		for p in self.platform_set:
-			print(p.x)
 	
 	def generate_platform(self, index):
 		width = 200
