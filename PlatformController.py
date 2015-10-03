@@ -14,8 +14,6 @@ class PlatformController:
 		self.score = 0
 		for i in range(0, self.index):
 			self.platform_set.append(self.generate_platform(i, self.score))
-		for p in self.platform_set:
-			print(p.x)
 	
 	def generate_platform(self, index, score):
 		if(score<MAX_JUMP*MAX_JUMP):
@@ -28,12 +26,15 @@ class PlatformController:
 		while True:
 			#x = randrange(self.last_x-MAX_JUMP , self.last_x+MAX_JUMP+width)
 			side = bool(getrandbits(1))
-			print(side)
-			print(change)
+			# print(side)
+			# print(change)
 			if side:
 				x = randrange(self.last_x-MAX_JUMP , self.last_x-change)
 			else:
 				x = randrange(self.last_x+width+change , self.last_x+MAX_JUMP+width)
+			# print(x)
+			# print(change)
+			# print(self.last_x)
 			#if x not in range(self.last_x-MAX_JUMP, self.last_x - change) or x not in range(self.last_x+width+change, self.last_x+MAX_JUMP+width):
 			if x >= 0 and x <= SCREEN_WIDTH - width:
 				break
