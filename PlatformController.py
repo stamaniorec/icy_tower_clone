@@ -1,22 +1,28 @@
 import pygame
 from random import randrange
 from Platform import Platform
-from Constants import SCREEN_WIDTH, SCREEN_HEIGHT, JUMP_VELOCITY
+from Constants import SCREEN_WIDTH, SCREEN_HEIGHT, JUMP_VELOCITY, MAX_JUMP
 pygame.init()
 
 class PlatformController:
-	platform_set = []
-	
 	def __init__(self):
-		for i in range(0, 10):
+		self.platform_set = []
+		self.index = 10
+		self.last_x = MAX_JUMP
+		for i in range(0, self.index):
 			self.platform_set.append(self.generate_platform(i))
-		self.flags = []
+		for p in self.platform_set:
+			print(p.x)
 	
 	def generate_platform(self, index):
-		width = 250
+		width = 200
 		height = 20
-		y = index * 100
-		x = randrange(0, SCREEN_WIDTH-width) 
+		y = 600 - index * 100
+		while True:
+			x = randrange(self.last_x-MAX_JUMP , self.last_x+MAX_JUMP+width)
+			if x >= 0 and x <= SCREEN_WIDTH - width:
+				break
+		self.last_x = x
 		return Platform(x, y, width, height)
 
 	def draw(self, game_display, camera):
@@ -27,8 +33,8 @@ class PlatformController:
 		for p in self.platform_set:
 			player.collide_platform(p)
 
-	# def generate_new_platforms(self, camera):
-	# 	print(self.platform_set[-1].y + camera.y)
-	# 	if self.platform_set[-1].y + camera.y < SCREEN_HEIGHT:
-	# 		for i in range(0,10):
-	# 			self.platform_set.append(self.generate_platform(i))
+	def generate_new_platforms(self, camera):
+		if self.platform_set[-1].y - camera.y > -50:
+			for i in range(self.index,self.index+10):
+				self.platform_set.append(self.generate_platform(i))
+			self.index += 10
