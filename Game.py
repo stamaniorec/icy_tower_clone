@@ -79,9 +79,8 @@ while game_loop:
 	player.update()
 	player.collide_platform(floor)
 	platform_controller.collide_set(player)
-
-	platform_controller.score = player.score
 	
+	platform_controller.score = player.score
 	camera.update(player.score)
 	platform_controller.generate_new_platforms(camera)
 

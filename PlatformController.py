@@ -21,7 +21,7 @@ class PlatformController:
 		if(score<MAX_JUMP*MAX_JUMP):
 			change = int(math.sqrt(score))
 		else:
-			change = MAX_JUMP
+			change = MAX_JUMP-1
 		width = 200 - randrange(change, change+60)
 		height = 20
 		y = 600 - index * 100
@@ -34,9 +34,6 @@ class PlatformController:
 				x = randrange(self.last_x-MAX_JUMP , self.last_x-change)
 			else:
 				x = randrange(self.last_x+width+change , self.last_x+MAX_JUMP+width)
-			print(x)
-			print(change)
-			print(self.last_x)
 			#if x not in range(self.last_x-MAX_JUMP, self.last_x - change) or x not in range(self.last_x+width+change, self.last_x+MAX_JUMP+width):
 			if x >= 0 and x <= SCREEN_WIDTH - width:
 				break
