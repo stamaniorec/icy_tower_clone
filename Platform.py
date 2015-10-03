@@ -1,4 +1,5 @@
 import pygame
+from IceSprite import IceSprite
 pygame.init()
 
 class Platform:
@@ -12,5 +13,8 @@ class Platform:
 
 	def draw(self, game_display):
 		pygame.draw.rect(game_display, self.color, self.rect)
+		for i in range(self.x, self.x+self.width, 10):
+			sprite = IceSprite([i, self.y])
+			game_display.blit(sprite.image, sprite.rect)	
 
 	
