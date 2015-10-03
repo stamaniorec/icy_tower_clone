@@ -1,11 +1,11 @@
 import pygame
 pygame.init()
 
-from Constants import GRAVITY, SCREEN_WIDTH
+from Constants import GRAVITY, SCREEN_WIDTH, SCREEN_HEIGHT
+
+from copy import deepcopy
 
 class Player:
-	x = 30
-	y = 300
 	width = 30
 	height = 50
 
@@ -17,10 +17,13 @@ class Player:
 	speed = 5
 
 	def __init__(self):
-		return
+		self.x = 30
+		self.y = 300
 
-	def draw(self, gameDisplay):
-		pygame.draw.rect(gameDisplay, self.color, self.get_rect())
+	def draw(self, game_display, camera):
+		rect = deepcopy(self.get_rect())
+		rect.top -= camera.y
+		pygame.draw.rect(game_display, self.color, rect)
 	
 	def update(self):
 		self.x += self.vel_x
@@ -32,7 +35,6 @@ class Player:
 			self.x = 0
 		if self.x + self.width >= SCREEN_WIDTH:
 			self.x = SCREEN_WIDTH - self.width
-		print(self.vel_y)
 
 	def on_platform(self, platform):
 		# return platform.rect.top <= self.y + self.height
@@ -57,3 +59,7 @@ class Player:
 	def get_rect(self):
 		return pygame.Rect(self.x, self.y, self.width, self.height)
 
+	def fallen_off_screen(self, camera):
+		if self.y - camera.y + self.height >= SCREEN_HEIGHT:
+			return True
+		return False
