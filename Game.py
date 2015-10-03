@@ -1,4 +1,5 @@
 import pygame
+from Camera import Camera
 from Player import Player 
 from Platform import Platform
 from PlatformController import PlatformController
@@ -14,6 +15,8 @@ blue = (0, 0, 255)
 player = Player()
 platform_controller = PlatformController()
 floor = Platform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)
+
+camera = Camera(player)
 
 game_loop = True
 clock = pygame.time.Clock()
@@ -39,14 +42,14 @@ while game_loop:
 	player.collide_platform(floor)
 	platform_controller.collide_set(player)
 	
-	
-
+	camera.update()
+	# platform_controller.generate_new_platforms(camera)
 
 	game_display.fill(black)
 	
-	floor.draw(game_display)
-	player.draw(game_display)
-	platform_controller.draw(game_display)
+	floor.draw(game_display, camera)
+	platform_controller.draw(game_display, camera)
+	player.draw(game_display, camera)
 	
 	pygame.display.update()
 	clock.tick(fps)

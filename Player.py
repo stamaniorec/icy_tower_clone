@@ -3,6 +3,8 @@ pygame.init()
 
 from Constants import GRAVITY, SCREEN_WIDTH
 
+from copy import deepcopy
+
 class Player:
 	x = 30
 	y = 300
@@ -19,8 +21,10 @@ class Player:
 	def __init__(self):
 		return
 
-	def draw(self, gameDisplay):
-		pygame.draw.rect(gameDisplay, self.color, self.get_rect())
+	def draw(self, game_display, camera):
+		rect = deepcopy(self.get_rect())
+		rect.top -= camera.y
+		pygame.draw.rect(game_display, self.color, rect)
 	
 	def update(self):
 		self.x += self.vel_x
@@ -32,7 +36,6 @@ class Player:
 			self.x = 0
 		if self.x + self.width >= SCREEN_WIDTH:
 			self.x = SCREEN_WIDTH - self.width
-		print(self.vel_y)
 
 	def on_platform(self, platform):
 		# return platform.rect.top <= self.y + self.height
@@ -56,4 +59,3 @@ class Player:
 
 	def get_rect(self):
 		return pygame.Rect(self.x, self.y, self.width, self.height)
-
