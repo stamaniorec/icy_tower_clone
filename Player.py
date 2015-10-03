@@ -19,6 +19,7 @@ class Player:
 	def __init__(self):
 		self.x = 30
 		self.y = 300
+		self.score = -10 # negate floor platform
 
 	def draw(self, game_display, camera):
 		rect = deepcopy(self.get_rect())
@@ -55,6 +56,10 @@ class Player:
 				if platform.rect.collidepoint((self.x, self.y + self.height-i)) or \
 		 	platform.rect.collidepoint((self.x+self.width, self.y + self.height-i)): #do not change! no on_platform here
 					self.y = platform.y - self.height
+					if not platform.collected_score:
+						self.score += 10
+						platform.collected_score = True
+					# break
 
 	def get_rect(self):
 		return pygame.Rect(self.x, self.y, self.width, self.height)
