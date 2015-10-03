@@ -12,6 +12,7 @@ class Platform:
 		self.height = height
 		self.width = width
 		self.rect = pygame.Rect(x, y, width, height)
+		self.collected_score = False
 
 	def draw(self, game_display, camera):
 		rect = deepcopy(self.rect)

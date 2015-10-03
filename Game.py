@@ -10,7 +10,26 @@ from Constants import *
 game_display = pygame.display.set_mode(res)
 
 black = (0,0,0)
-blue = (0, 0, 255)
+blue = (0,0, 255)
+white = (255,255,255)
+
+# Text
+def text_objects(text, font, color):
+    textSurface = font.render(text, True, color)
+    return textSurface, textSurface.get_rect()
+
+def message_display(text, x, y, font_size, centered_x=False, centered_y=False):
+    font = pygame.font.Font(None,font_size)
+    TextSurf, TextRect = text_objects(text, font, white)
+    if centered_x and centered_y:
+    	TextRect.center = ((SCREEN_WIDTH/2),(SCREEN_HEIGHT/2))
+    elif centered_x:
+    	TextRect.center = ((SCREEN_WIDTH/2),y)
+    elif centered_y:
+    	TextRect.center = (x,(SCREEN_HEIGHT/2))
+    else:
+    	TextRect.center = (x,y)
+    game_display.blit(TextSurf, TextRect)
 
 def reinit():
 	global player
@@ -73,17 +92,18 @@ while game_loop:
 		floor.draw(game_display, camera)
 		platform_controller.draw(game_display, camera)
 		player.draw(game_display, camera)
+		
+		message_display(str(player.score), 25, 30, 36)
 	elif game_state == 'Game Over':
-		font_size = 36
-		text_color = (255,255,255)
-		background_text_color = (0,0,0)
-		background = pygame.Surface(game_display.get_size())
 		if pygame.font:
-		    font = pygame.font.Font(None, font_size)
-		    text = font.render("Press SPACE to play again", 1, text_color, background_text_color) # color and background
-		    textpos = text.get_rect(centerx=background.get_width()/2, centery=background.get_height()/2)
-		    background.blit(text, textpos)
-		    game_display.blit(background, (0,0))
+		    # text = font.render("Press SPACE to play again", 1, text_color, background_text_color) # color and background
+		    # textpos = text.get_rect(centerx=background.get_width()/2, centery=background.get_height()/2)
+		    # background.blit(text, textpos)
+		    # game_display.blit(background, (0,0))
+		    message_display("GAME OVER", 0, 200, 70, True)
+		    message_display("Score: %d" % player.score, 0, 300, 50, True)
+		    message_display("Press SPACE to play again!", 0, 400, 50, True)
+		    # pass
 	
 	pygame.display.update()
 	clock.tick(fps)
