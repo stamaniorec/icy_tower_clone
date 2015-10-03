@@ -14,8 +14,6 @@ class Player:
 	max_falling_speed = 20
 
 	color = (255, 0, 0)
-	# falling_speed = 10
-	# jumping_speed = 0
 	speed = 5
 
 	def __init__(self):
@@ -31,8 +29,11 @@ class Player:
 		if self.vel_y > self.max_falling_speed:
 			self.vel_y = self.max_falling_speed
 
+	def on_floor(self, floor):
+		return floor.rect.top <= self.y + self.height
+		
 	def collide_floor(self, floor):
-		if self.get_rect().colliderect(floor.rect):
+		if self.on_floor(floor):
 			self.y = floor.rect.top - self.height
 
 	def get_rect(self):
