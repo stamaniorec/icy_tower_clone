@@ -1,7 +1,6 @@
 import pygame
 from Player import Player 
 from Platform import Platform
-from Floor import Floor
 
 pygame.init()
 
@@ -13,7 +12,7 @@ blue = (0, 0, 255)
 
 player = Player()
 platform = Platform(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 80, 10)
-floor = Floor()
+floor = Platform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)
 
 game_loop = True
 clock = pygame.time.Clock()
@@ -24,8 +23,8 @@ while game_loop:
 		if event.type == pygame.QUIT:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_SPACE and player.on_floor(floor):
-				player.vel_y = -17
+			if event.key == pygame.K_SPACE:
+				player.vel_y = -27
 
 	keys_pressed = pygame.key.get_pressed()
 	if(keys_pressed[pygame.K_LEFT]):
@@ -36,13 +35,14 @@ while game_loop:
 		player.vel_x = 0
 
 	player.update()
-	player.collide_floor(floor)
+	player.collide_platform(floor)
 	player.collide_platform(platform)
 
-	if player.collide_platform(platform):
-		game_display.fill(blue)
-	else:
-		game_display.fill(black)
+	game_display.fill(black)
+	# if player.collide_platform(platform):
+	# 	game_display.fill(blue)
+	# else:
+	# 	game_display.fill(black)
 
 	floor.draw(game_display)
 	player.draw(game_display)

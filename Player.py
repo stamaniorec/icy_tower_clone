@@ -33,16 +33,17 @@ class Player:
 		if self.x + self.width >= SCREEN_WIDTH:
 			self.x = SCREEN_WIDTH - self.width
 
-	def on_floor(self, floor):
-		return floor.rect.top <= self.y + self.height
+	# def on_floor(self, floor):
+	# 	return floor.rect.top <= self.y + self.height
 		
-	def collide_floor(self, floor):
-		if self.on_floor(floor):
-			self.y = floor.rect.top - self.height
+	# def collide_floor(self, floor):
+	# 	if self.on_floor(floor):
+	# 		self.y = floor.rect.top - self.height
 	
 	def collide_platform(self, platform):
 		#if (((self.y + self.height) == range(platform.y, platform.y+platform.height)) and (self.x.range(platform.x, platform.x+platform.width))):
 		
+		# if platform.rect.top <= self.y + self.height:
 		if self.get_rect().colliderect(platform.rect):
 			if self.y+self.height >= platform.y:
 				self.y = platform.y - self.height
