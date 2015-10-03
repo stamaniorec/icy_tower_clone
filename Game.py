@@ -24,7 +24,7 @@ while game_loop:
 		if event.type == pygame.QUIT:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_SPACE and (player.on_platform(platform_controller, floor)):
+			if event.key == pygame.K_SPACE and (player.on_any_platform(platform_controller, floor)):
 				player.vel_y = -JUMP_VELOCITY
 
 	keys_pressed = pygame.key.get_pressed()
@@ -36,8 +36,11 @@ while game_loop:
 		player.vel_x = 0
 
 	player.update()
-	player.collide_platform(floor)	
+	player.collide_platform(floor)
 	platform_controller.collide_set(player)
+	
+	
+
 
 	game_display.fill(black)
 	

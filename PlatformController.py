@@ -10,11 +10,12 @@ class PlatformController:
 	def __init__(self):
 		for i in range(0, 10):
 			self.platform_set.append(self.generate_platform(i))
+		self.flags = []
 	
 	def generate_platform(self, index):
 		width=500
 		height=20
-		y = JUMP_VELOCITY*index*10
+		y = index * 100
 		x = randrange(0, SCREEN_WIDTH-width) 
 		return Platform(x, y, width, height)
 
