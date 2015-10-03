@@ -24,30 +24,28 @@ while game_loop:
 		if event.type == pygame.QUIT:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_SPACE and player.onfloor():
-				player.jump()
+			if event.key == pygame.K_SPACE:
+				player.vel_y = -17
+
+	keys_pressed = pygame.key.get_pressed()
+	if(keys_pressed[pygame.K_LEFT]):
+		player.vel_x = -player.speed
+	elif(keys_pressed[pygame.K_RIGHT]):
+		player.vel_x = player.speed
+	else:
+		player.vel_x = 0
 
 	player.update()
 	player.collide_floor(floor)
-	# if(player.y<SCREEN_HEIGHT-(floor.rect.height + player.height)):
-	# 	player.fall()
-	player.y -= player.jumping_speed
-	if(player.jumping_speed>0):
-		player.jumping_speed-=1
+
 	if player.get_rect().colliderect(obstacle.obstacle_rect):
 		game_display.fill(blue)
 	else:
 		game_display.fill(black)
-	player.draw(game_display)
-	obstacle.draw(game_display)
-	
-	keys_pressed = pygame.key.get_pressed()
-	if(keys_pressed[pygame.K_LEFT]):
-		player.x-=player.speed
-	elif(keys_pressed[pygame.K_RIGHT]):
-		player.x+=player.speed
 
 	floor.draw(game_display)
+	player.draw(game_display)
+	obstacle.draw(game_display)
 	
 	pygame.display.update()
 	clock.tick(fps)
