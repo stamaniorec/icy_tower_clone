@@ -24,7 +24,7 @@ while game_loop:
 		if event.type == pygame.QUIT:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_SPACE:
+			if event.key == pygame.K_SPACE and player.on_floor(floor):
 				player.vel_y = -17
 
 	keys_pressed = pygame.key.get_pressed()

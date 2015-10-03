@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 
-from Constants import GRAVITY
+from Constants import GRAVITY, SCREEN_WIDTH
 
 class Player:
 	x = 30
@@ -14,8 +14,6 @@ class Player:
 	max_falling_speed = 20
 
 	color = (255, 0, 0)
-	# falling_speed = 10
-	# jumping_speed = 0
 	speed = 5
 
 	def __init__(self):
@@ -30,9 +28,16 @@ class Player:
 		self.vel_y += GRAVITY
 		if self.vel_y > self.max_falling_speed:
 			self.vel_y = self.max_falling_speed
+		if self.x <= 0:
+			self.x = 0
+		if self.x + self.width >= SCREEN_WIDTH:
+			self.x = SCREEN_WIDTH - self.width
 
+	def on_floor(self, floor):
+		return floor.rect.top <= self.y + self.height
+		
 	def collide_floor(self, floor):
-		if self.get_rect().colliderect(floor.rect):
+		if self.on_floor(floor):
 			self.y = floor.rect.top - self.height
 	
 	def collide_platform(self, platform):
