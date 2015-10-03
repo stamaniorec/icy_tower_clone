@@ -10,5 +10,7 @@ class Platform:
 		self.width = width
 		self.rect = pygame.Rect(x, y, width, height)
 
-	def draw(self, gameDisplay):
-		pygame.draw.rect(gameDisplay, self.color, self.rect)
+	def draw(self, game_display):
+		pygame.draw.rect(game_display, self.color, self.rect)
+
+	

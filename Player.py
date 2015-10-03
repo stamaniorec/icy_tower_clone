@@ -33,9 +33,15 @@ class Player:
 		if self.x + self.width >= SCREEN_WIDTH:
 			self.x = SCREEN_WIDTH - self.width
 
-	def on_platform(self, platform):
-		return platform.rect.collidepoint((self.x, self.y + self.height)) or \
-			platform.rect.collidepoint((self.x+self.width, self.y + self.height))
+	def on_platform(self, platform_controller, floor):
+		for p in platform_controller.platform_set:
+			if (p.rect.collidepoint((self.x, self.y + self.height)) or \
+			p.rect.collidepoint((self.x+self.width, self.y + self.height))):
+				return True
+		if (floor.rect.collidepoint((self.x, self.y + self.height)) or \
+			floor.rect.collidepoint((self.x+self.width, self.y + self.height))):
+				return True
+		return False
 	
 	def collide_platform(self, platform):
 		if self.get_rect().colliderect(platform.rect):

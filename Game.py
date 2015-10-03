@@ -1,6 +1,7 @@
 import pygame
 from Player import Player 
 from Platform import Platform
+from PlatformController import PlatformController
 
 pygame.init()
 
@@ -11,7 +12,7 @@ black = (0,0,0)
 blue = (0, 0, 255)
 
 player = Player()
-platform = Platform(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 80, 10)
+platform_controller = PlatformController()
 floor = Platform(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)
 
 game_loop = True
@@ -23,8 +24,8 @@ while game_loop:
 		if event.type == pygame.QUIT:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_SPACE and (player.on_platform(floor) or player.on_platform(platform)):
-				player.vel_y = -27
+			if event.key == pygame.K_SPACE and (player.on_platform(platform_controller, floor)):
+				player.vel_y = -JUMP_VELOCITY
 
 	keys_pressed = pygame.key.get_pressed()
 	if(keys_pressed[pygame.K_LEFT]):
@@ -35,14 +36,14 @@ while game_loop:
 		player.vel_x = 0
 
 	player.update()
-	player.collide_platform(floor)
-	player.collide_platform(platform)
+	player.collide_platform(floor)	
+	platform_controller.collide_set(player)
 
 	game_display.fill(black)
 	
 	floor.draw(game_display)
 	player.draw(game_display)
-	platform.draw(game_display)
+	platform_controller.draw(game_display)
 	
 	pygame.display.update()
 	clock.tick(fps)
