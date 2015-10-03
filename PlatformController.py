@@ -13,7 +13,7 @@ class PlatformController:
 	
 	def generate_platform(self, index):
 		width=500
-		height=20
+		height=7
 		y = JUMP_VELOCITY*index*10
 		x = randrange(0, SCREEN_WIDTH-width) 
 		return Platform(x, y, width, height)

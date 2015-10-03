@@ -26,6 +26,8 @@ while game_loop:
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_SPACE and (player.on_platform(platform_controller, floor)):
 				player.vel_y = -JUMP_VELOCITY
+			if event.key == pygame.K_ESCAPE:
+				game_loop = False
 
 	keys_pressed = pygame.key.get_pressed()
 	if(keys_pressed[pygame.K_LEFT]):
