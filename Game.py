@@ -1,6 +1,6 @@
 import pygame
 from Player import Player 
-from Obstacle import Obstacle
+from Platform import Platform
 from Floor import Floor
 
 pygame.init()
@@ -12,7 +12,7 @@ black = (0,0,0)
 blue = (0, 0, 255)
 
 player = Player()
-obstacle = Obstacle(SCREEN_WIDTH/2, SCREEN_HEIGHT-100, 10, 80)
+platform = Platform(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 80, 10)
 floor = Floor()
 
 game_loop = True
@@ -29,17 +29,18 @@ while game_loop:
 
 	player.update()
 	player.collide_floor(floor)
+	player.collide_platform(platform)
 	# if(player.y<SCREEN_HEIGHT-(floor.rect.height + player.height)):
 	# 	player.fall()
 	player.y -= player.jumping_speed
 	if(player.jumping_speed>0):
 		player.jumping_speed-=1
-	if player.get_rect().colliderect(obstacle.obstacle_rect):
+	if player.get_rect().colliderect(platform.platform_rect):
 		game_display.fill(blue)
 	else:
 		game_display.fill(black)
 	player.draw(game_display)
-	obstacle.draw(game_display)
+	platform.draw(game_display)
 	
 	keys_pressed = pygame.key.get_pressed()
 	if(keys_pressed[pygame.K_LEFT]):

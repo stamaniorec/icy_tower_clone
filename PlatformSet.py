@@ -1,6 +1,6 @@
 import pygame
-from Obstacle import Obstacle
+from Platform import Platform
 pygame.init()
 
-class ObstacleSet:
-	obstacle_set = Obstacle[5]
+class PlatformSet:
+	platform_set = PLatform[5]

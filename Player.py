@@ -27,6 +27,10 @@ class Player:
 	def collide_floor(self, floor):
 		if self.get_rect().colliderect(floor.rect):
 			self.y = floor.rect.top - self.height
+	
+	def collide_platform(self, platform):
+		if ((self.y + self.height)==(floor.y) and (self.x.range(platform.x, platform.x+platform.width))):
+			self.y = platform.y
 
 	def get_rect(self):
 		return pygame.Rect(self.x, self.y, self.width, self.height)
