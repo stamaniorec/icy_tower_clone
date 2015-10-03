@@ -5,9 +5,9 @@ from Constants import GRAVITY, SCREEN_WIDTH
 
 class Player:
 	x = 30
-	y = 10
+	y = 300
 	width = 30
-	height = 30
+	height = 50
 
 	vel_x = 5
 	vel_y = 0
@@ -32,21 +32,27 @@ class Player:
 			self.x = 0
 		if self.x + self.width >= SCREEN_WIDTH:
 			self.x = SCREEN_WIDTH - self.width
+		print(self.vel_y)
 
-	def on_platform(self, platform_controller, floor):
+	def on_platform(self, platform):
+		# return platform.rect.top <= self.y + self.height
+		return platform.rect.collidepoint((self.x, self.y + self.height)) or \
+			platform.rect.collidepoint((self.x+self.width, self.y + self.height))
+
+	def on_any_platform(self, platform_controller, floor):
 		for p in platform_controller.platform_set:
-			if (p.rect.collidepoint((self.x, self.y + self.height)) or \
-			p.rect.collidepoint((self.x+self.width, self.y + self.height))):
+			if self.on_platform(p):
 				return True
-		if (floor.rect.collidepoint((self.x, self.y + self.height)) or \
-			floor.rect.collidepoint((self.x+self.width, self.y + self.height))):
-				return True
+		if self.on_platform(floor):
+			return True
 		return False
 	
 	def collide_platform(self, platform):
-		if self.get_rect().colliderect(platform.rect):
-			if self.y+self.height >= platform.y:
-				self.y = platform.y - self.height
+		for i in range(0,self.vel_y):
+			if pygame.Rect(self.x, self.y-i, self.width, self.height).colliderect(platform.rect):
+				if platform.rect.collidepoint((self.x, self.y + self.height-i)) or \
+		 	platform.rect.collidepoint((self.x+self.width, self.y + self.height-i)): #do not change! no on_platform here
+					self.y = platform.y - self.height
 
 	def get_rect(self):
 		return pygame.Rect(self.x, self.y, self.width, self.height)
