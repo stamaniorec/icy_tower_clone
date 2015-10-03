@@ -23,7 +23,7 @@ while game_loop:
 		if event.type == pygame.QUIT:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_SPACE:
+			if event.key == pygame.K_SPACE and (player.on_platform(floor) or player.on_platform(platform)):
 				player.vel_y = -27
 
 	keys_pressed = pygame.key.get_pressed()
@@ -39,11 +39,7 @@ while game_loop:
 	player.collide_platform(platform)
 
 	game_display.fill(black)
-	# if player.collide_platform(platform):
-	# 	game_display.fill(blue)
-	# else:
-	# 	game_display.fill(black)
-
+	
 	floor.draw(game_display)
 	player.draw(game_display)
 	platform.draw(game_display)
