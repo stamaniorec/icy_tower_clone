@@ -56,10 +56,16 @@ while game_loop:
 					reinit()
 					game_state = 'Playing'
 			elif game_state == "Menu": #----------------Menu Events-------------
-				if event.key == pygame.K_DOWN and selected_option<0.50:
-					selected_option+=0.10
-				elif event.key == pygame.K_UP and selected_option>0.35:
-					selected_option-=0.10
+				if event.key == pygame.K_DOWN:
+					if selected_option<0.45:
+						selected_option+=0.10
+					else:
+						selected_option=0.30
+				elif event.key == pygame.K_UP:
+					if selected_option>0.35:
+						selected_option-=0.10
+					else: 
+						selected_option=0.50
 				elif event.key == pygame.K_RETURN:
 					if selected_option < 0.35:
 						reinit()
