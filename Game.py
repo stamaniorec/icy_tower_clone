@@ -54,15 +54,34 @@ while game_loop:
 
 	keys_pressed = pygame.key.get_pressed()
 	if keys_pressed[pygame.K_LEFT]:
-		player.vel_x = -player.speed
+		# player.vel_x = -player.speed
+		player.vel_x -= player.acceleration
+		if player.vel_x < -player.max_vel_x:
+			player.vel_x = -player.max_vel_x
 		player.sprite_index_y = 2
 	elif keys_pressed[pygame.K_RIGHT]:
-		player.vel_x = player.speed
+		# player.vel_x = player.speed
+		player.vel_x += player.acceleration
+		if player.vel_x > player.max_vel_x:
+			player.vel_x = player.max_vel_x
 		player.sprite_index_y = 1
 	else:
-		player.vel_x = 0
+		# player.vel_x = 0
+		if player.vel_x < 0:
+			player.vel_x += player.acceleration
+			player.vel_x -= ICE_RESISTANCE
+			if player.vel_x > 0:
+				player.vel_x = 0
+		else:
+			player.vel_x -= player.acceleration
+			player.vel_x += ICE_RESISTANCE
+			if player.vel_x < 0:
+				player.vel_x = 0
+
 		if player.vel_y >= JUMP_VELOCITY/2:
 			player.sprite_index_y = 0
+
+	print(player.vel_x)
 
 	if keys_pressed[pygame.K_SPACE]:
 		if player.on_any_platform(platform_controller, floor):

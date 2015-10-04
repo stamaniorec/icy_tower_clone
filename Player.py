@@ -10,9 +10,12 @@ class Player:
 	width = 30
 	height = 50
 
-	vel_x = 5
+	vel_x = 0
 	vel_y = 0
 	max_falling_speed = 20
+
+	acceleration = 0.5
+	max_vel_x = 7
 
 	color = (255, 0, 0)
 	speed = 5
