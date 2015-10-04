@@ -45,9 +45,6 @@ while game_loop:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
 			if game_state == 'Playing':
-				if event.key == pygame.K_SPACE and (player.on_any_platform(platform_controller, floor)):
-					player.vel_y = -JUMP_VELOCITY
-					player.sprite_index_y = 3
 				if event.key == pygame.K_ESCAPE:
 					game_loop = False
 			elif game_state == 'Game Over':
@@ -56,15 +53,22 @@ while game_loop:
 					game_state = 'Playing'
 
 	keys_pressed = pygame.key.get_pressed()
-	if(keys_pressed[pygame.K_LEFT]):
+	if keys_pressed[pygame.K_LEFT]:
 		player.vel_x = -player.speed
 		player.sprite_index_y = 2
-	elif(keys_pressed[pygame.K_RIGHT]):
+	elif keys_pressed[pygame.K_RIGHT]:
 		player.vel_x = player.speed
 		player.sprite_index_y = 1
 	else:
 		player.vel_x = 0
-		player.sprite_index_y = 0
+		if player.vel_y >= JUMP_VELOCITY/2:
+			player.sprite_index_y = 0
+
+	if keys_pressed[pygame.K_SPACE]:
+		if player.on_any_platform(platform_controller, floor):
+			player.sprite_index_y = 3
+			if player.vel_y >= JUMP_VELOCITY/2:
+				player.vel_y = -JUMP_VELOCITY
 
 	player.update()
 	player.collide_platform(floor)
