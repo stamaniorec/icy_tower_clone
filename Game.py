@@ -9,6 +9,7 @@ pygame.init()
 from Constants import *
 from Utils import *
 game_display = pygame.display.set_mode(res)
+pygame.display.set_caption(GAME_CAPTION)
 
 black = (0,0,0)
 blue = (0,0, 255)

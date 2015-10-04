@@ -20,4 +20,4 @@ class Camera:
 			else:
 				self.y -= 4
 		
-			print(change)
+			# print(change)

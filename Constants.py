@@ -5,3 +5,5 @@ JUMP_VELOCITY = 15
 MAX_JUMP = 100
 
 GRAVITY = 1
+
+GAME_CAPTION = 'Icy Tower Clone'

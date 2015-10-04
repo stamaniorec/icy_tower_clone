@@ -22,26 +22,26 @@ class Player:
 		self.y = 300
 		self.score = -10 # negate floor platform
 
-		self.spritesheet_image = load_image('spritesheet2.png')
+		self.spritesheet_image = load_image('spritesheet.png')
 		self.spritesheet = []
 
 		# Idle
-		self.cropped = pygame.Surface((33, 57))
+		self.cropped = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped.blit(self.spritesheet_image, (0, 0), (0, 0, 33, 57))
-		self.cropped2 = pygame.Surface((33, 57))
+		self.cropped2 = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped2.blit(self.spritesheet_image, (0, 0), (37, 0, 33, 57))
-		self.cropped3 = pygame.Surface((33, 57))
+		self.cropped3 = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped3.blit(self.spritesheet_image, (0, 0), (75, 0, 33, 57))
 		self.spritesheet.append(self.cropped)
 		self.spritesheet.append(self.cropped2)
 		self.spritesheet.append(self.cropped3)
 		
 		# Going right
-		self.cropped4 = pygame.Surface((33, 57))
+		self.cropped4 = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped4.blit(self.spritesheet_image, (0, 0), (0, 56, 33, 57))
-		self.cropped5 = pygame.Surface((33, 57))
+		self.cropped5 = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped5.blit(self.spritesheet_image, (0, 0), (37, 56, 33, 57))
-		self.cropped6 = pygame.Surface((33, 57))
+		self.cropped6 = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped6.blit(self.spritesheet_image, (0, 0), (75, 56, 33, 57))
 		self.spritesheet.append(self.cropped4)
 		self.spritesheet.append(self.cropped5)
@@ -53,7 +53,7 @@ class Player:
 		self.spritesheet.append(pygame.transform.flip(self.cropped6, True, False))
 
 		# Jumping
-		self.cropped7 = pygame.Surface((33, 57))
+		self.cropped7 = pygame.Surface((33, 57), pygame.SRCALPHA, 32)
 		self.cropped7.blit(self.spritesheet_image, (0, 0), (75, 112, 33, 57))
 		self.spritesheet.append(self.cropped7)
 		self.spritesheet.append(self.cropped7)
@@ -65,9 +65,10 @@ class Player:
 		self.frame_delay = 9
 
 	def draw(self, game_display, camera):
+		# commented code left for historical reasons, we all got very attached to our red rectangle
 		# rect = deepcopy(self.get_rect())
 		# rect.top -= camera.y
-		# pygame.draw.rect(game_display, self.color, rect) # left for historical reasons, this was an era
+		# pygame.draw.rect(game_display, self.color, rect)
 
 		game_display.blit(self.spritesheet[self.sprite_index_y*3 + self.sprite_index_x], (self.x, self.y-camera.y))
 

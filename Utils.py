@@ -21,20 +21,13 @@ def message_display(game_display, text, x, y, font_size, color, centered_x=False
 
 import os, sys
 from pygame.locals import RLEACCEL
-def load_image(name):
+def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
     try:
         image = pygame.image.load(fullname)
     except pygame.error, message:
         print 'Cannot load image:', name
         raise SystemExit, message
-    # image = image.convert_alpha()
-    # image.set_colorkey(-1, RLEACCEL)
-    # image = pygame.image.load(playerPath + "idle.png").convert()
-    # transColor = image.get_at((0,0))
-    # image.set_colorkey(transColor)
-    # image.set_alpha(255)
-    # image = image.convert_alpha()
     image = image.convert()
     colorkey = -1
     if colorkey is not None:
