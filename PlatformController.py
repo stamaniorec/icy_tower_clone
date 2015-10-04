@@ -24,18 +24,11 @@ class PlatformController:
 		height = 20
 		y = 600 - index * 100
 		while True:
-			#x = randrange(self.last_x-MAX_JUMP , self.last_x+MAX_JUMP+width)
 			side = bool(getrandbits(1))
-			# print(side)
-			# print(change)
 			if side:
 				x = randrange(self.last_x-MAX_JUMP , self.last_x-change)
 			else:
 				x = randrange(self.last_x+width+change , self.last_x+MAX_JUMP+width)
-			# print(x)
-			# print(change)
-			# print(self.last_x)
-			#if x not in range(self.last_x-MAX_JUMP, self.last_x - change) or x not in range(self.last_x+width+change, self.last_x+MAX_JUMP+width):
 			if x >= 0 and x <= SCREEN_WIDTH - width:
 				break
 		self.last_x = x
@@ -46,8 +39,8 @@ class PlatformController:
 			p.draw(game_display, camera)
 
 	def collide_set(self, player):
-		for p in self.platform_set:
-			player.collide_platform(p)
+		for i,p in enumerate(self.platform_set):
+			player.collide_platform(p,i)
 
 	def generate_new_platforms(self, camera):
 		if self.platform_set[-1].y - camera.y > -50:

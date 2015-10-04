@@ -10,16 +10,19 @@ class Player:
 	width = 30
 	height = 50
 
-	vel_x = 5
+	vel_x = 0
 	vel_y = 0
 	max_falling_speed = 20
+
+	acceleration = 0.5
+	max_vel_x = 7
 
 	color = (255, 0, 0)
 	speed = 5
 
 	def __init__(self):
 		self.x = 30
-		self.y = 300
+		self.y = 500
 		self.score = -10 # negate floor platform
 
 		self.spritesheet_image = load_image('spritesheet.png')
@@ -65,11 +68,6 @@ class Player:
 		self.frame_delay = 9
 
 	def draw(self, game_display, camera):
-		# commented code left for historical reasons, we all got very attached to our red rectangle
-		# rect = deepcopy(self.get_rect())
-		# rect.top -= camera.y
-		# pygame.draw.rect(game_display, self.color, rect)
-
 		game_display.blit(self.spritesheet[self.sprite_index_y*3 + self.sprite_index_x], (self.x, self.y-camera.y))
 
 		self.frame_counter += 1
@@ -90,6 +88,18 @@ class Player:
 		if self.x + self.width >= SCREEN_WIDTH:
 			self.x = SCREEN_WIDTH - self.width
 
+	def combo(self):
+		if self.x == 0:
+			if self.vel_y < 0:
+				if self.vel_x < 0:
+					self.vel_y -= 10
+					self.vel_x *= -2.5
+		if self.x + self.width >= SCREEN_WIDTH:
+			if self.vel_y < 0:
+				if self.vel_x > 0:
+					self.vel_y -= 10
+					self.vel_x *= -2.5
+
 	def on_platform(self, platform):
 		# return platform.rect.top <= self.y + self.height
 		return platform.rect.collidepoint((self.x, self.y + self.height)) or \
@@ -103,17 +113,17 @@ class Player:
 			return True
 		return False
 	
-	def collide_platform(self, platform):
+	def collide_platform(self, platform, index):
 		for i in range(0,self.vel_y):
 			if pygame.Rect(self.x, self.y-i, self.width, self.height).colliderect(platform.rect):
 				if platform.rect.collidepoint((self.x, self.y + self.height-i)) or \
 		 	platform.rect.collidepoint((self.x+self.width, self.y + self.height-i)): #do not change! no on_platform here
 					self.y = platform.y - self.height
-					# self.sprite_index_y = 0 # fixes player sprite not going to idle when on platform
 					if not platform.collected_score:
 						self.score += 10
+						if self.score < index * 10:
+							self.score = index * 10
 						platform.collected_score = True
-					# break
 
 	def get_rect(self):
 		return pygame.Rect(self.x, self.y, self.width, self.height)
