@@ -49,7 +49,7 @@ while game_loop:
 			game_loop = False
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
-				if game_state == 'Playing' or game_state == "Game Over":
+				if game_state == 'Playing' or game_state == 'Game Over' or game_state == 'About':
 					game_state = 'Menu'
 			elif game_state == 'Game Over':
 				if event.key == pygame.K_SPACE:
@@ -64,6 +64,8 @@ while game_loop:
 					if selected_option < 0.35:
 						reinit()
 						game_state = 'Playing'
+					elif selected_option == 0.40:
+						game_state = 'About'
 					elif selected_option == 0.50:
 						game_loop = False
 
@@ -99,9 +101,9 @@ while game_loop:
 		game_display.blit(arrow_image, (MENU_START_X + ARROW_HALF_WIDTH, MENU_START_Y + SCREEN_HEIGHT*selected_option - ARROW_HALF_HEIGHT))
 		if pygame.font:
 			# transparent black rectangle
-			s = pygame.Surface((SCREEN_WIDTH/2, round(SCREEN_HEIGHT/1.45)), pygame.SRCALPHA)
-			s.fill((0,0,0,128))
-			game_display.blit(s, (MENU_START_X, MENU_START_Y))
+			#s = pygame.Surface((SCREEN_WIDTH/2, round(SCREEN_HEIGHT/1.45)), pygame.SRCALPHA)
+			#s.fill((0,0,0,128))
+			#game_display.blit(s, (MENU_START_X, MENU_START_Y))
 			# menu title
 			message_display(game_display, "Icy Tower(clone)", 0, MENU_START_Y+round(SCREEN_HEIGHT*0.15), 60, white, True)
 			# menu items
@@ -151,6 +153,15 @@ while game_loop:
 		    message_display(game_display, "Press SPACE to play again!", 0, 400, 50, white, True)
 		    message_display(game_display, "Press ESC to return to menu!", 0, 500, 40, white, True)
 
+
+	#--------------------------ABOUT----------------------------
+	elif game_state == 'About':
+		game_display.blit(background,(0,0))	
+		if pygame.font:
+			for line in ABOUT_MESSAGE:
+				message_display(game_display, line, 0, MENU_START_Y+ABOUT_MESSAGE.index(line)*35, 30, white, True)
+			message_display(game_display, "Press ESC to return to menu!", 0, 500, 40, white, True)
+				
 
 	#-----------------------------------------------------------
 	

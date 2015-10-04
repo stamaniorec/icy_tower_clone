@@ -15,3 +15,5 @@ GRAVITY = 1
 GAME_CAPTION = 'Icy Tower Clone'
 
 ICE_RESISTANCE = 0.1
+
+ABOUT_MESSAGE = ["This game, clone of Icy Tower,", "was made by us, Dimitar", "and Stanimir with the purpose", "of practicing our Python and", "Pygame skills and", "participating in the", "Hack Together hackathon", "organized by Strypes"]
